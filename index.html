@@ -51,8 +51,8 @@
     }
 
     .logo-container {
-      width: 150px;
-      height: 150px;
+      width: 140px;
+      height: 140px;
       margin: 0 auto 15px auto;
       border-radius: 50%;
       border: 3px solid var(--gold-primary);
@@ -151,7 +151,7 @@
       font-size: 15px;
     }
 
-    .template-box {
+    .form-box {
       background: #0f172a;
       border: 1px dashed var(--border-gold);
       border-radius: 12px;
@@ -159,18 +159,61 @@
       margin-bottom: 25px;
     }
 
-    .template-box h3 {
+    .form-box h3 {
       color: var(--gold-light);
       font-size: 16px;
-      margin-bottom: 12px;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .input-group {
+      margin-bottom: 15px;
+      text-align: left;
+    }
+
+    .input-group label {
+      display: block;
+      color: var(--gold-light);
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border-gold);
+      background-color: #1e293b;
+      color: var(--text-light);
+      font-size: 15px;
+      outline: none;
+    }
+
+    .input-group input:focus {
+      border-color: var(--gold-light);
+      box-shadow: 0 0 8px rgba(251, 191, 36, 0.4);
+    }
+
+    .preview-title {
+      color: var(--text-muted);
+      font-size: 13px;
+      margin-top: 15px;
+      margin-bottom: 5px;
+      font-weight: 600;
     }
 
     .template-text {
       font-family: monospace;
-      font-size: 15px;
+      font-size: 14px;
       line-height: 1.8;
       color: var(--text-light);
       white-space: pre-wrap;
+      background: #090d16;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #334155;
     }
 
     .actions {
@@ -219,9 +262,9 @@
     @media print {
       body { background: #fff; color: #000; }
       .container { border: none; box-shadow: none; background: #fff; color: #000; }
-      .actions, .btn { display: none !important; }
-      .template-box { border: 1px solid #000; color: #000; }
-      .template-text { color: #000; }
+      .actions, .btn, .input-group input { display: none !important; }
+      .form-box { border: 1px solid #000; color: #000; }
+      .template-text { color: #000; background: #fff; }
     }
   </style>
 </head>
@@ -231,7 +274,7 @@
     <!-- Encabezado con Logo Redondo -->
     <div class="header">
       <div class="logo-container">
-        <img src="logo.png" id="img-logo" onerror="this.onerror=null; this.src='logo.jpg';" alt="Logo Su Suerte El Socio">
+        <img src="logo.png" onerror="this.onerror=null; this.src='logo.jpg';" alt="Logo Su Suerte El Socio">
       </div>
       <h1 class="title">MEGA COMBO BOLIVIA</h1>
       <p class="subtitle">Su Suerte El Socio - ¡Ganadores Reales, Premios Reales!</p>
@@ -239,7 +282,7 @@
 
     <!-- Banner Promocional -->
     <div class="banner">
-      <img src="banner.png" id="img-banner" onerror="this.onerror=null; this.src='banner.jpg';" alt="Ganadores Reales Premios Reales">
+      <img src="banner.png" onerror="this.onerror=null; this.src='banner.jpg';" alt="Ganadores Reales Premios Reales">
     </div>
 
     <div class="content">
@@ -252,14 +295,31 @@
       <div class="qr-section">
         <div class="qr-title">📲 ESCANEA AQUÍ PARA PAGAR TU BOLETA</div>
         <div class="qr-code">
-          <img src="qr.png" id="img-qr" onerror="this.onerror=null; this.src='qr.jpg';" alt="QR Banco Ganadero 5 Bs">
+          <img src="qr.png" onerror="this.onerror=null; this.src='qr.jpg';" alt="QR Banco Ganadero 5 Bs">
         </div>
         <div class="bank-name">BANCO GANADERO</div>
       </div>
 
-      <!-- Plantilla para WhatsApp -->
-      <div class="template-box">
-        <h3>✍️ Copia esta plantilla para completar tus datos:</h3>
+      <!-- Formulario Interactio para llenar datos -->
+      <div class="form-box">
+        <h3>✍️ COMPLETA TUS DATOS DE REGISTRO:</h3>
+
+        <div class="input-group">
+          <label for="nombre">💎 Nombre Completo:</label>
+          <input type="text" id="nombre" placeholder="Ej. Juan Pérez" oninput="actualizarTexto()">
+        </div>
+
+        <div class="input-group">
+          <label for="ciudad">💎 Ciudad:</label>
+          <input type="text" id="ciudad" placeholder="Ej. La Paz / Santa Cruz" oninput="actualizarTexto()">
+        </div>
+
+        <div class="input-group">
+          <label for="telefono">💎 Teléfono / WhatsApp:</label>
+          <input type="tel" id="telefono" placeholder="Ej. 67723609" oninput="actualizarTexto()">
+        </div>
+
+        <div class="preview-title">Vista previa del mensaje a enviar:</div>
         <div class="template-text" id="wsText">✍️ Datos de registro:
 
 💎 Nombre: 
@@ -277,9 +337,9 @@
         <button class="btn btn-copy" onclick="copiarTexto()">
           📋 Copiar Texto
         </button>
-        <a href="https://wa.me/59167723609" target="_blank" class="btn btn-ws">
-          💬 Enviar WhatsApp
-        </a>
+        <button class="btn btn-ws" onclick="enviarWhatsApp()">
+          💬 Enviar a WhatsApp
+        </button>
         <button class="btn btn-print" onclick="window.print()">
           🖨️ Guardar o Imprimir PDF
         </button>
@@ -288,13 +348,38 @@
   </div>
 
   <script>
+    function actualizarTexto() {
+      const nombre = document.getElementById('nombre').value || '';
+      const ciudad = document.getElementById('ciudad').value || '';
+      const telefono = document.getElementById('telefono').value || '';
+
+      const mensaje = `✍️ Datos de registro:
+
+💎 Nombre: ${nombre}
+💎 Ciudad: ${ciudad}
+💎 Teléfono: ${telefono}
+
+🎟️ Separa tu boleta con: 5 BS
+💳 Medio de pago: Banco Ganadero (QR)
+
+📲 Contacto: +591 6772 3609`;
+
+      document.getElementById('wsText').innerText = mensaje;
+    }
+
     function copiarTexto() {
       const texto = document.getElementById('wsText').innerText;
       navigator.clipboard.writeText(texto).then(() => {
-        alert('¡Texto copiado con éxito! Ahora pégalo en WhatsApp.');
+        alert('¡Texto copiado con éxito!');
       }).catch(err => {
         console.error('Error al copiar: ', err);
       });
+    }
+
+    function enviarWhatsApp() {
+      const texto = document.getElementById('wsText').innerText;
+      const textoEncoded = encodeURIComponent(texto);
+      window.open(`https://wa.me/59167723609?text=${textoEncoded}`, '_blank');
     }
   </script>
 
